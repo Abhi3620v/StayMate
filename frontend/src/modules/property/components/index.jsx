@@ -8,11 +8,14 @@ import Skeleton from '../../../components/ui/Skeleton.jsx';
 /**
  * Reusable Status Badge for property listings
  */
-export const PropertyStatusBadge = ({ status }) => {
+export const PropertyStatusBadge = ({ status, verified }) => {
   const statusConfig = {
     draft: { variant: 'secondary', label: 'Draft' },
     pending_review: { variant: 'warning', label: 'In Review' },
-    published: { variant: 'success', label: 'Active' },
+    published: { 
+      variant: verified ? 'success' : 'warning', 
+      label: verified ? 'Active' : 'Pending Verification' 
+    },
     archived: { variant: 'secondary', label: 'Archived' },
     rejected: { variant: 'danger', label: 'Rejected' },
     suspended: { variant: 'danger', label: 'Suspended' },
@@ -41,7 +44,7 @@ export const PropertyCard = ({ property, onAction }) => {
           <div className="w-full h-full flex items-center justify-center text-secondary-400">No Image</div>
         )}
         <div className="absolute top-3 right-3">
-          <PropertyStatusBadge status={property.status} />
+          <PropertyStatusBadge status={property.status} verified={property.features?.verified || property.verificationStatus === 'verified'} />
         </div>
       </div>
       <div className="p-5 space-y-2">
@@ -177,7 +180,7 @@ export const PropertyTable = ({ properties, columns, onAction }) => {
               <td className="py-3 px-4 font-bold">{prop.title}</td>
               <td className="py-3 px-4 capitalize">{prop.propertyType}</td>
               <td className="py-3 px-4 font-semibold text-primary-600">₹{prop.pricing?.monthlyRent}</td>
-              <td className="py-3 px-4"><PropertyStatusBadge status={prop.status} /></td>
+              <td className="py-3 px-4"><PropertyStatusBadge status={prop.status} verified={prop.features?.verified || prop.verificationStatus === 'verified'} /></td>
               <td className="py-3 px-4">
                 <Button size="xs" variant="ghost" onClick={() => onAction(prop)}>Edit</Button>
               </td>

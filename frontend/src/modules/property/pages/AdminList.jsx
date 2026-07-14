@@ -296,7 +296,7 @@ export const AdminList = () => {
                       {property.location?.area}, {property.location?.city}
                     </td>
                     <td className="py-4 px-5 font-extrabold text-primary-650">₹{property.pricing?.monthlyRent}</td>
-                    <td className="py-4 px-5"><div className="w-[120px]"><PropertyStatusBadge status={property.status} /></div></td>
+                    <td className="py-4 px-5"><div className="w-[120px]"><PropertyStatusBadge status={property.status} verified={property.features?.verified || property.verificationStatus === 'verified'} /></div></td>
                     <td className="py-4 px-5 text-right" onClick={(e) => e.stopPropagation()}>
                       <Button size="xs" variant="primary" className="w-[120px] justify-center" onClick={() => openReviewDrawer(property)}>
                         Review Listing
@@ -371,7 +371,7 @@ export const AdminList = () => {
                     <div className="w-full h-full flex items-center justify-center text-secondary-400">No Image</div>
                   )}
                   <div className="absolute top-3 right-3">
-                    <PropertyStatusBadge status={drawerProperty.status} />
+                    <PropertyStatusBadge status={drawerProperty.status} verified={drawerProperty.features?.verified || drawerProperty.verificationStatus === 'verified'} />
                   </div>
                 </div>
 

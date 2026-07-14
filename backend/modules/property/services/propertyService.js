@@ -517,6 +517,7 @@ class PropertyService {
         statusUpdate = {
           status: PROPERTY_STATUS.PUBLISHED,
           verification: 'verified',
+          'features.verified': true,
           'metadata.publishedAt': new Date(),
           'metadata.publishedBy': reviewerId
         };
@@ -526,6 +527,7 @@ class PropertyService {
         statusUpdate = {
           status: PROPERTY_STATUS.REJECTED,
           verification: 'rejected',
+          'features.verified': false,
           'metadata.rejectedAt': new Date(),
           'metadata.rejectedBy': reviewerId
         };
@@ -534,7 +536,8 @@ class PropertyService {
       case 'changes_requested':
         statusUpdate = {
           status: PROPERTY_STATUS.DRAFT,
-          verification: 'pending'
+          verification: 'pending',
+          'features.verified': false
         };
         eventName = 'property:changesRequested';
         break;
@@ -542,6 +545,7 @@ class PropertyService {
         statusUpdate = {
           status: PROPERTY_STATUS.SUSPENDED,
           verification: 'suspended',
+          'features.verified': false,
           'metadata.suspendedAt': new Date(),
           'metadata.suspendedBy': reviewerId
         };

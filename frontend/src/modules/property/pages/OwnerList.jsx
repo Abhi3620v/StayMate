@@ -307,7 +307,7 @@ export const OwnerList = () => {
                   />
                 </div>
                 <div className="absolute top-3 right-3">
-                  <PropertyStatusBadge status={property.status} />
+                  <PropertyStatusBadge status={property.status} verified={property.features?.verified || property.verificationStatus === 'verified'} />
                 </div>
               </div>
               
@@ -386,7 +386,7 @@ export const OwnerList = () => {
                       {property.location?.area}, {property.location?.city}
                     </td>
                     <td className="py-4 px-5 font-extrabold text-primary-650">₹{property.pricing?.monthlyRent}</td>
-                    <td className="py-4 px-5"><PropertyStatusBadge status={property.status} /></td>
+                    <td className="py-4 px-5"><PropertyStatusBadge status={property.status} verified={property.features?.verified || property.verificationStatus === 'verified'} /></td>
                     <td className="py-4 px-5 text-xs text-secondary-400 font-semibold space-x-3">
                       <span>{property.statistics?.views || 0} views</span>
                       <span>{property.statistics?.favorites || 0} saves</span>
@@ -487,7 +487,7 @@ export const OwnerList = () => {
 
                 <div className="flex justify-between items-center">
                   <h4 className="text-lg font-black text-secondary-900 dark:text-white">{drawerProperty.title}</h4>
-                  <PropertyStatusBadge status={drawerProperty.status} />
+                  <PropertyStatusBadge status={drawerProperty.status} verified={drawerProperty.features?.verified || drawerProperty.verificationStatus === 'verified'} />
                 </div>
 
                 {drawerProperty.status === 'published' && (
