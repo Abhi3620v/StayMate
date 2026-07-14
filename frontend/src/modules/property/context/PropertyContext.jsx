@@ -215,11 +215,22 @@ export const PropertyProvider = ({ children }) => {
   }, [fetchOwnerProperties, updateLoadingState]);
 
   // Upload images
-  const uploadImages = useCallback(async (id, formData, onProgress = null) => {
+  const uploadImages = useCallback(async (id, payload, onProgress = null) => {
     updateLoadingState('uploadingImages', true);
     updateErrorState('uploadError', null);
     try {
-      const response = await propertyService.uploadImages(id, formData, onProgress);
+      let finalFormData = payload;
+      if (!(payload instanceof FormData)) {
+        finalFormData = new FormData();
+        if (Array.isArray(payload)) {
+          payload.forEach(file => {
+            finalFormData.append('images', file);
+          });
+        } else {
+          finalFormData.append('images', payload);
+        }
+      }
+      const response = await propertyService.uploadImages(id, finalFormData, onProgress);
       if (draftProperty && draftProperty._id === id) {
         setDraftProperty(prev => ({
           ...prev,
