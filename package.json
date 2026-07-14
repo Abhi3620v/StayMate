@@ -1,0 +1,21 @@
+{
+  "name": "staymate-root",
+  "version": "1.0.0",
+  "description": "StayMate - Find Your Perfect Stay. Find Your Perfect Roommate.",
+  "main": "index.js",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "start:backend": "npm run start --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

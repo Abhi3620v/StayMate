@@ -1,0 +1,90 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        // Design System Theme Colors
+        primary: {
+          50: '#FEF0F8',
+          100: '#FFE5E2',
+          200: '#FFCCC7',
+          300: '#FFAEA5',
+          400: '#FF9286',
+          500: '#FFAAA2',
+          600: '#E08077',
+          700: '#C25B52',
+          800: '#A33E35',
+          900: '#85251C',
+          950: '#661008',
+        },
+        secondary: {
+          50: '#FEF0F8',
+          100: '#FAF0F3',
+          200: '#F2E6EA',
+          300: '#E1D2D6',
+          400: '#C6B2B7',
+          500: '#A28D92',
+          600: '#846F74',
+          700: '#665257',
+          800: '#4C3A3F',
+          900: '#332227',
+          950: '#1F1115',
+        },
+        success: {
+          50: '#f0fdf4',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+        },
+        warning: {
+          50: '#fffbeb',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+        },
+        error: {
+          50: '#fef2f2',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+        },
+      },
+      spacing: {
+        '4': '4px',
+        '8': '8px',
+        '12': '12px',
+        '16': '16px',
+        '20': '20px',
+        '24': '24px',
+        '32': '32px',
+        '40': '40px',
+        '48': '48px',
+        '64': '64px',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'md': '6px',
+        'lg': '8px',
+        'xl': '12px',
+        '2xl': '16px',
+      },
+      boxShadow: {
+        'sm': '0 1px 2px 0 rgba(51, 34, 39, 0.02)',
+        'md': '0 4px 12px -2px rgba(51, 34, 39, 0.03), 0 2px 6px -1px rgba(51, 34, 39, 0.02)',
+        'lg': '0 12px 32px -4px rgba(51, 34, 39, 0.04), 0 4px 12px -2px rgba(51, 34, 39, 0.03)',
+        'xl': '0 20px 40px -4px rgba(51, 34, 39, 0.05), 0 8px 16px -2px rgba(51, 34, 39, 0.03)',
+      },
+      transitionDuration: {
+        'fast': '150ms',
+        'normal': '300ms',
+        'slow': '500ms',
+      },
+    },
+  },
+  plugins: [],
+}

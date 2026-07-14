@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Outfit', sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased bg-secondary-50 text-secondary-900 transition-colors duration-normal dark:bg-secondary-950 dark:text-secondary-100;
+  }
+
+  /* Accessibility Focus Rings */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-secondary-950;
+  }
+}
+
+@layer utilities {
+  /* Scrollbar customized stylings */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary-100 dark:bg-secondary-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-md bg-secondary-300 hover:bg-secondary-400 dark:bg-secondary-700 dark:hover:bg-secondary-600;
+  }
+
+  .shadow-premium-sm {
+    @apply shadow-sm;
+  }
+  .shadow-premium-md {
+    @apply shadow-md;
+  }
+  .shadow-premium-lg {
+    @apply shadow-lg;
+  }
+
+  /* Float Keyframes for Premium Badges */
+  .animate-float-slow {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-medium {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Shimmer animations */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.25) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Slide-down and up transitions */
+  .animate-slide-up {
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(12px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-left {
+    animation: slideLeft 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slideLeft {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-right {
+    animation: slideRight 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slideRight {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Hover underline slide-in transition utility */
+  .link-hover-underline {
+    position: relative;
+  }
+  .link-hover-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  .link-hover-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
