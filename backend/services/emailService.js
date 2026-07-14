@@ -38,6 +38,8 @@ const wrapHtmlLayout = (title, contentHtml) => `
 </html>
 `;
 
+import dns from 'dns';
+dns.setDefaultResultOrder('ipv4first');
 import nodemailer from 'nodemailer';
 
 // Initialize SMTP Transporter if configured
