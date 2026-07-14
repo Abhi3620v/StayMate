@@ -38,10 +38,13 @@ export const authController = {
       }
 
       const user = await authService.register(validationResult.data, req);
+      const isRealEmailEnabled = !!(process.env.BREVO_API_KEY || (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS));
 
       res.status(201).json({
         success: true,
-        message: 'Registration successful! Verification email logged to console.',
+        message: isRealEmailEnabled 
+          ? 'Registration successful! Please check your email to verify your account.' 
+          : 'Registration successful! Verification email logged to console.',
         data: {
           id: user._id,
           name: user.name,
