@@ -437,16 +437,48 @@ export const CreateWizard = () => {
                   <Input label="Landmark (Optional)" placeholder="e.g. Near Bharti Vidyapeeth" {...register('landmark')} />
                   <Input label="Pin Code" placeholder="e.g. 411046" {...register('pinCode')} error={errors.pinCode?.message} />
                 </div>
-                {/* Mock maps geolocation */}
+                {/* Geolocation Calculator */}
                 <div className="p-5 border border-secondary-200/50 dark:border-secondary-900 rounded-2xl bg-secondary-50/50 dark:bg-secondary-950 flex flex-col md:flex-row items-center justify-between gap-4">
                   <div className="space-y-1">
                     <h5 className="text-sm font-bold text-secondary-800 dark:text-secondary-200">Google Maps Geolocation</h5>
-                    <p className="text-xs text-secondary-400">Coordinates are auto-calculated from city/state data.</p>
+                    <p className="text-xs text-secondary-400">Calculate coordinates from address details dynamically.</p>
                   </div>
-                  <div className="flex space-x-3 text-xs font-semibold text-secondary-500 bg-white dark:bg-secondary-900 border border-secondary-200/60 dark:border-secondary-800 p-2.5 rounded-xl">
-                    <span>Lat: 28.6139</span>
-                    <span>•</span>
-                    <span>Lng: 77.2090</span>
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const cityVal = watch('city');
+                        const areaVal = watch('area');
+                        const stateVal = watch('state');
+                        if (!cityVal) {
+                          toast.error('Please enter a city first to locate on map.');
+                          return;
+                        }
+                        const loadingToast = toast.loading('Calculating coordinates...');
+                        try {
+                          const address = `${areaVal || ''}, ${cityVal}, ${stateVal || ''}, India`;
+                          const { default: locationService } = await import('../../location/services/locationService.js');
+                          const result = await locationService.geocode(address);
+                          if (result && result.latitude && result.longitude) {
+                            setValue('latitude', result.latitude);
+                            setValue('longitude', result.longitude);
+                            toast.success(`Location verified: Lat ${result.latitude.toFixed(4)}, Lng ${result.longitude.toFixed(4)}`, { id: loadingToast });
+                          } else {
+                            toast.error('Could not calculate coordinates. Please check the address format.', { id: loadingToast });
+                          }
+                        } catch (err) {
+                          toast.error('Failed to geocode location.', { id: loadingToast });
+                        }
+                      }}
+                      className="px-4 py-2.5 text-xs font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition duration-150 shadow-sm"
+                    >
+                      Locate on Map
+                    </button>
+                    <div className="flex space-x-3 text-xs font-bold text-secondary-650 dark:text-secondary-300 bg-white dark:bg-secondary-900 border border-secondary-200/60 dark:border-secondary-800 p-2.5 rounded-xl">
+                      <span>Lat: {Number(watch('latitude') || 28.6139).toFixed(4)}</span>
+                      <span>•</span>
+                      <span>Lng: {Number(watch('longitude') || 77.2090).toFixed(4)}</span>
+                    </div>
                   </div>
                 </div>
               </div>
