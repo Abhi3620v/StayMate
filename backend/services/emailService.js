@@ -56,6 +56,7 @@ if (isSmtpConfigured) {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+    family: 4, // Force IPv4 to prevent ENETUNREACH errors on IPv6-disabled host environments (like Render)
   });
   console.log('📧 [Email Status] SMTP Transporter configured. Real emails will be dispatched.');
 } else {
