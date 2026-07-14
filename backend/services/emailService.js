@@ -74,6 +74,40 @@ export const emailService = {
    * Helper dispatching simulated email outputs
    */
   sendMail: async ({ to, subject, html }) => {
+    // 1. Primary: Use Brevo HTTP REST API (Bypasses SMTP port blocking on Render)
+    if (process.env.BREVO_API_KEY) {
+      try {
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': process.env.BREVO_API_KEY,
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            sender: { 
+              name: process.env.EMAIL_FROM_NAME || 'StayMate', 
+              email: process.env.EMAIL_FROM || 'no-reply@staymate.com' 
+            },
+            to: [{ email: to }],
+            subject: subject,
+            htmlContent: html
+          })
+        });
+        if (response.ok) {
+          const resData = await response.json();
+          console.log(`📧 [Brevo REST API Mail Sent] MessageId: ${resData.messageId} to ${to}`);
+          return true;
+        } else {
+          const errText = await response.text();
+          console.warn(`⚠️ [Brevo API Warning] Status ${response.status}: ${errText}`);
+        }
+      } catch (err) {
+        console.error('❌ [Brevo API Mail Failed] Sending failed, trying SMTP fallback. Error:', err.message);
+      }
+    }
+
+    // 2. Secondary: SMTP transport
     if (transporter) {
       try {
         const mailOptions = {
