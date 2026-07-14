@@ -57,6 +57,9 @@ if (isSmtpConfigured) {
       pass: process.env.SMTP_PASS,
     },
     family: 4, // Force IPv4 to prevent ENETUNREACH errors on IPv6-disabled host environments (like Render)
+    connectionTimeout: 20000, // 20 seconds timeout
+    greetingTimeout: 20000,
+    socketTimeout: 30000,
   });
   console.log('📧 [Email Status] SMTP Transporter configured. Real emails will be dispatched.');
 } else {
