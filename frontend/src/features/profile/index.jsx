@@ -110,7 +110,7 @@ const Profile = () => {
       setReviewsListLoading(true);
       try {
         const token = localStorage.getItem('accessToken');
-        const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000');
         
         const [repRes, reviewsRes] = await Promise.all([
           axios.get(`${baseUrl}/api/v1/reviews/reputation/${user?.id || user?._id}`, {

@@ -10,8 +10,15 @@ export const AuthProvider = ({ children }) => {
   const [completeness, setCompleteness] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Restore session on mount
+  // Restore session on mount & listen to token rotation failures
   useEffect(() => {
+    const handleAuthLogout = () => {
+      setUser(null);
+      setCompleteness(null);
+      localStorage.removeItem('accessToken');
+    };
+    window.addEventListener('auth:logout', handleAuthLogout);
+
     const restoreSession = async () => {
       const token = localStorage.getItem('accessToken');
       if (!token) {
@@ -30,6 +37,10 @@ export const AuthProvider = ({ children }) => {
       }
     };
     restoreSession();
+
+    return () => {
+      window.removeEventListener('auth:logout', handleAuthLogout);
+    };
   }, []);
 
   const login = async (email, password) => {

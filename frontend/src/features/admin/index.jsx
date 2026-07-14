@@ -54,7 +54,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/v1/chat/reports`,
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/chat/reports`,
         { headers: { Authorization: token ? `Bearer ${token}` : '' } }
       );
       setChatReports(response.data.data || []);
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/v1/reviews/reports`,
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/reviews/reports`,
         { headers: { Authorization: token ? `Bearer ${token}` : '' } }
       );
       setReviewReports(response.data.data || []);
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('accessToken');
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/v1/chat/reports/${id}/resolve`,
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/chat/reports/${id}/resolve`,
         {},
         { headers: { Authorization: token ? `Bearer ${token}` : '' } }
       );
@@ -473,7 +473,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('accessToken');
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/v1/reviews/reports/${reviewId}/resolve/${reportId}`,
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/reviews/reports/${reviewId}/resolve/${reportId}`,
         { status, action },
         { headers: { Authorization: token ? `Bearer ${token}` : '' } }
       );

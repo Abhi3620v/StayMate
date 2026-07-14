@@ -47,7 +47,7 @@ export const TenantDashboard = () => {
       // Fetch dynamic reputation score
       const token = localStorage.getItem('accessToken');
       const repResponse = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/v1/reviews/reputation/${user?.id || user?._id}`,
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/reviews/reputation/${user?.id || user?._id}`,
         { headers: { Authorization: token ? `Bearer ${token}` : '' } }
       );
       setReputation(repResponse.data.data);

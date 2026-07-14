@@ -49,6 +49,7 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         // Refresh token failed/expired - clear credentials and propagate error
         localStorage.removeItem('accessToken');
+        window.dispatchEvent(new Event('auth:logout'));
         return Promise.reject(refreshError);
       }
     }
