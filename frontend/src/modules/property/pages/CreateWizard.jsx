@@ -459,10 +459,11 @@ export const CreateWizard = () => {
                           const address = `${areaVal || ''}, ${cityVal}, ${stateVal || ''}, India`;
                           const { default: locationService } = await import('../../location/services/locationService.js');
                           const result = await locationService.geocode(address);
-                          if (result && result.latitude && result.longitude) {
-                            setValue('latitude', result.latitude);
-                            setValue('longitude', result.longitude);
-                            toast.success(`Location verified: Lat ${result.latitude.toFixed(4)}, Lng ${result.longitude.toFixed(4)}`, { id: loadingToast });
+                          const geoData = result?.data;
+                          if (geoData && geoData.latitude && geoData.longitude) {
+                            setValue('latitude', geoData.latitude);
+                            setValue('longitude', geoData.longitude);
+                            toast.success(`Location verified: Lat ${geoData.latitude.toFixed(4)}, Lng ${geoData.longitude.toFixed(4)}`, { id: loadingToast });
                           } else {
                             toast.error('Could not calculate coordinates. Please check the address format.', { id: loadingToast });
                           }
