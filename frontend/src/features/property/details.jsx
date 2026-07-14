@@ -1028,7 +1028,7 @@ const PropertyDetails = () => {
                   </p>
                 </div>
                 <Button 
-                  onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${prop.location?.latitude || 28.6282},${prop.location?.longitude || 77.3789}`, '_blank')}
+                  onClick={() => window.open(`https://www.openstreetmap.org/directions?route=;${prop.location?.latitude || 28.6282},${prop.location?.longitude || 77.3789}`, '_blank')}
                   variant="outline" 
                   size="sm" 
                   className="font-black text-xs py-2.5 px-4 border-secondary-200 dark:border-secondary-800 rounded-full hover:bg-secondary-50 dark:hover:bg-secondary-900 flex items-center space-x-1.5 whitespace-nowrap shadow-premium-sm"

@@ -396,6 +396,47 @@ class GoogleMapsService {
     ];
 
     if (this.isMockMode) {
+      try {
+        const query = `[out:json];node(around:2000,${lat},${lng})["amenity"~"university|school|hospital|cafe|restaurant|subway_station|bus_station|bank|pharmacy|marketplace|townhall"];out 15;`;
+        const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+        const response = await fetch(url, { headers: { 'User-Agent': 'StayMate-App' } });
+        if (response.ok) {
+          const body = await response.json();
+          const elements = body.elements || [];
+          const validNodes = elements.filter(el => el.tags && el.tags.name);
+          if (validNodes.length > 0) {
+            return validNodes.map((el) => {
+              const amenity = el.tags.amenity || '';
+              let type = 'Landmark';
+              if (amenity === 'subway_station' || el.tags.railway === 'station') type = 'Metro Station';
+              else if (amenity === 'bus_station' || el.tags.highway === 'bus_stop') type = 'Bus Stop';
+              else if (amenity === 'hospital' || amenity === 'clinic') type = 'Hospital';
+              else if (amenity === 'pharmacy') type = 'Pharmacy';
+              else if (amenity === 'university' || amenity === 'college' || amenity === 'school') type = 'College / University';
+              else if (amenity === 'cafe') type = 'Cafe';
+              else if (amenity === 'restaurant') type = 'Restaurant';
+              else if (amenity === 'bank' || amenity === 'atm') type = 'Bank / ATM';
+              
+              const distanceKm = Number(haversineDistance(lat, lng, el.lat, el.lon).toFixed(2));
+              const speed = type === 'Airport' || type === 'Railway Station' ? 300 : 80;
+              const travelTimeMin = Math.max(1, Math.round((distanceKm * 1000) / speed));
+              const mode = distanceKm > 2 ? 'drive' : 'walk';
+              
+              return {
+                type,
+                name: el.tags.name,
+                distance: `${distanceKm} km`,
+                time: `${travelTimeMin} mins ${mode}`,
+                lat: el.lat,
+                lng: el.lon
+              };
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('Overpass POIs lookup failed, using preset mock data:', err.message);
+      }
+
       return landmarkPresets.map((preset, idx) => {
         // Calculate a realistic distance offset (0.3km to 18km depending on speed/type)
         const distanceKm = preset.type === 'Airport' 

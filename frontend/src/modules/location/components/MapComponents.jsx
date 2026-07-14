@@ -524,12 +524,12 @@ export const RadiusSelector = ({ selectedRadius, onRadiusChange }) => {
  * 4. DirectionsButton
  */
 export const DirectionsButton = ({ latitude, longitude, label = "Get Directions" }) => {
-  const launchGoogleMapsNavigation = () => {
+  const launchOSMNavigation = () => {
     if (!latitude || !longitude) {
       toast.error('Location coordinates unavailable.');
       return;
     }
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    const url = `https://www.openstreetmap.org/directions?route=;${latitude},${longitude}`;
     window.open(url, '_blank');
   };
 
@@ -537,7 +537,7 @@ export const DirectionsButton = ({ latitude, longitude, label = "Get Directions"
     <Button 
       variant="outline" 
       size="sm" 
-      onClick={launchGoogleMapsNavigation}
+      onClick={launchOSMNavigation}
       className="text-[10px] font-black border-primary-500 text-primary-650 hover:bg-primary-50 w-full justify-center"
     >
       <Navigation className="h-3.5 w-3.5 mr-1" /> {label}
