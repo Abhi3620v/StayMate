@@ -192,18 +192,57 @@ class GoogleMapsService {
       );
       if (matched) return matched;
       
-      // Dynamic coordinate mapping fallback
+      // Dynamic coordinate mapping fallback with keyword intelligence
+      let lat = 28.628;
+      let lng = 77.382;
+      let city = 'Noida';
+      let state = 'Uttar Pradesh';
+      let pinCode = '201301';
+
+      if (address) {
+        const addrLower = address.toLowerCase();
+        if (addrLower.includes('greater noida') || addrLower.includes('knowledge park')) {
+          lat = 28.474;
+          lng = 77.504;
+          city = 'Greater Noida';
+        } else if (addrLower.includes('delhi') || addrLower.includes('new delhi')) {
+          lat = 28.613;
+          lng = 77.209;
+          city = 'New Delhi';
+          state = 'Delhi';
+          pinCode = '110001';
+        } else if (addrLower.includes('pune') || addrLower.includes('katraj')) {
+          lat = 18.520;
+          lng = 73.856;
+          city = 'Pune';
+          state = 'Maharashtra';
+          pinCode = '411001';
+        } else if (addrLower.includes('mumbai') || addrLower.includes('bandra')) {
+          lat = 19.076;
+          lng = 72.877;
+          city = 'Mumbai';
+          state = 'Maharashtra';
+          pinCode = '400001';
+        } else if (addrLower.includes('bangalore') || addrLower.includes('bengaluru')) {
+          lat = 12.971;
+          lng = 77.594;
+          city = 'Bengaluru';
+          state = 'Karnataka';
+          pinCode = '560001';
+        }
+      }
+
       return {
         description: address || 'Custom Location, India',
         placeId: placeId || `mock_place_${crypto.randomBytes(8).toString('hex')}`,
         street: 'Main Road',
         area: 'Locality',
-        city: 'Noida',
-        state: 'Uttar Pradesh',
+        city,
+        state,
         country: 'India',
-        pinCode: '201301',
-        latitude: 28.628 + (Math.random() - 0.5) * 0.05,
-        longitude: 77.382 + (Math.random() - 0.5) * 0.05
+        pinCode,
+        latitude: lat + (Math.random() - 0.5) * 0.01,
+        longitude: lng + (Math.random() - 0.5) * 0.01
       };
     }
 
