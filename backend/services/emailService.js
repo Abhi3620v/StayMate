@@ -60,6 +60,7 @@ if (isSmtpConfigured) {
   console.log('📧 [Email Status] SMTP Transporter configured. Real emails will be dispatched.');
 } else {
   console.log('📧 [Email Status] Running in Sandbox mode. Transactional emails will be logged to server console.');
+  console.log(`   [Email Config Status] SMTP_HOST: ${process.env.SMTP_HOST ? 'PRESENT' : 'MISSING'}, SMTP_USER: ${process.env.SMTP_USER ? 'PRESENT' : 'MISSING'}, SMTP_PASS: ${process.env.SMTP_PASS ? 'PRESENT' : 'MISSING'}`);
 }
 
 export const emailService = {
