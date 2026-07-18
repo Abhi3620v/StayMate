@@ -99,6 +99,29 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/users`,
+        { headers: { Authorization: token ? `Bearer ${token}` : '' } }
+      );
+      if (response.data?.success && response.data?.data) {
+        const mappedUsers = response.data.data.map(u => ({
+          id: u._id,
+          name: u.name || 'Anonymous User',
+          email: u.email,
+          role: u.role || 'tenant',
+          status: u.status || 'Active',
+          joined: u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A'
+        }));
+        setUsers(mappedUsers);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch registered users:', err.message);
+    }
+  };
+
   useEffect(() => {
     fetchPlatformStats();
     if (pathname.includes('/reports')) {
@@ -110,6 +133,9 @@ const AdminDashboard = () => {
     }
     if (pathname.includes('/broadcast')) {
       fetchNotificationAnalytics();
+    }
+    if (pathname.includes('/users') || pathname.includes('/dashboard') || pathname === '/admin') {
+      fetchUsers();
     }
   }, [pathname]);
 
@@ -149,11 +175,11 @@ const AdminDashboard = () => {
     { id: 'rep-1', title: 'Single Shared Room Katraj', owner: 'Suresh Kumar', reason: 'Incorrect price details', date: '2026-07-01' },
   ]);
 
-  const users = [
+  const [users, setUsers] = useState([
     { id: 'usr-1', name: 'Priya Sharma', email: 'priya.sharma@mail.com', role: 'tenant', status: 'Active', joined: '2026-07-03' },
     { id: 'usr-2', name: 'Rajesh Malhotra', email: 'rajesh.owner@gmail.com', role: 'owner', status: 'KYC Pending', joined: '2026-07-02' },
     { id: 'usr-3', name: 'Aman Verma', email: 'aman.verma@mail.com', role: 'tenant', status: 'Active', joined: '2026-07-01' },
-  ];
+  ]);
 
   const handleApproveKYC = (id) => { toast.success('KYC approved.'); setPendingKYC((p) => p.filter((k) => k.id !== id)); };
   const handleRejectKYC = (id) => { toast.success('KYC rejected.'); setPendingKYC((p) => p.filter((k) => k.id !== id)); };

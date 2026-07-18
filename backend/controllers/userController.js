@@ -72,6 +72,21 @@ export const userController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  /**
+   * Retrieves list of all registered users
+   */
+  getAllUsers: async (req, res, next) => {
+    try {
+      const usersList = await userService.getAllUsers();
+      res.status(200).json({
+        success: true,
+        data: usersList
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 };
 

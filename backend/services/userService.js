@@ -76,6 +76,17 @@ export const userService = {
     }
 
     return true;
+  },
+
+  /**
+   * Retrieves list of all registered users
+   */
+  getAllUsers: async () => {
+    if (isDbConnected()) {
+      return await User.find({}, 'name email role status createdAt');
+    } else {
+      return mockUsers;
+    }
   }
 };
 
