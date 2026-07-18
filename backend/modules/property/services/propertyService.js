@@ -950,6 +950,13 @@ class PropertyService {
     const suspended = await propertyRepository.countDocuments({ status: PROPERTY_STATUS.SUSPENDED }, true);
     const archived = await propertyRepository.countDocuments({ status: PROPERTY_STATUS.ARCHIVED }, true);
 
+    let totalUsers = 0;
+    try {
+      totalUsers = await mongoose.connection.db.collection('users').countDocuments();
+    } catch (err) {
+      console.warn('Failed to count users dynamically:', err.message);
+    }
+
     // City distributions (agg or mock based on data)
     const citiesList = await propertyRepository.find({}, {}, true);
     const cityCounts = {};
@@ -979,7 +986,8 @@ class PropertyService {
         publishedListings: published,
         pendingReviews: pending,
         suspendedListings: suspended,
-        archivedListings: archived
+        archivedListings: archived,
+        totalUsers: totalUsers
       },
       distributions: {
         cityDistribution,

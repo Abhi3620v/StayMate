@@ -26,11 +26,34 @@ const AdminDashboard = () => {
   const [chatReports, setChatReports] = useState([]);
   const [reviewReports, setReviewReports] = useState([]);
   const [reportsTab, setReportsTab] = useState('properties');
+  const [platformStats, setPlatformStats] = useState({
+    totalUsers: 1482,
+    totalProperties: 412
+  });
 
   // Broadcast & Analytics State
   const [broadcastData, setBroadcastData] = useState({ title: '', message: '', priority: 'medium', icon: 'bell' });
   const [analytics, setAnalytics] = useState(null);
   const [broadcastLoading, setBroadcastLoading] = useState(false);
+
+  const fetchPlatformStats = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/v1\/?$/, '') : 'http://localhost:5000')}/api/v1/properties/admin/analytics`,
+        { headers: { Authorization: token ? `Bearer ${token}` : '' } }
+      );
+      if (response.data?.success && response.data?.data) {
+        const kpi = response.data.data.kpi || {};
+        setPlatformStats({
+          totalUsers: kpi.totalUsers || 0,
+          totalProperties: kpi.totalListings || 0
+        });
+      }
+    } catch (err) {
+      console.warn('Failed to retrieve platform stats:', err.message);
+    }
+  };
 
   const fetchNotificationAnalytics = async () => {
     try {
@@ -77,6 +100,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
+    fetchPlatformStats();
     if (pathname.includes('/reports')) {
       fetchRoommateReports();
       fetchChatReports();
@@ -773,8 +797,8 @@ const AdminDashboard = () => {
       />
 
       <DashboardStats>
-        <MetricCard title="Users" value="1,482" change="+84" trend="increase" desc="This month" icon={<Users className="h-5 w-5 text-primary-600" />} />
-        <MetricCard title="Properties" value="412" change="380 active" trend="neutral" desc="Total properties" icon={<Home className="h-5 w-5 text-primary-600" />} />
+        <MetricCard title="Users" value={String(platformStats.totalUsers)} change="+84" trend="increase" desc="This month" icon={<Users className="h-5 w-5 text-primary-600" />} />
+        <MetricCard title="Properties" value={String(platformStats.totalProperties)} change="Active Listings" trend="neutral" desc="Total properties" icon={<Home className="h-5 w-5 text-primary-600" />} />
         <MetricCard title="Pending KYC" value={String(pendingKYC.length)} change="Needs review" trend="neutral" desc="KYC queue backlog" icon={<UserCheck className="h-5 w-5 text-warning-600" />} />
         <MetricCard title="Open Reports" value={String(reportedListings.length)} change="Flagged items" trend="neutral" desc="Moderation flags" icon={<ShieldAlert className="h-5 w-5 text-error-500" />} />
       </DashboardStats>
