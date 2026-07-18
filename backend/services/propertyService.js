@@ -13,6 +13,225 @@ const matchIds = (id1, id2) => {
   return id1.toString() === id2.toString();
 };
 
+const getMockProperty = (id) => {
+  const mocks = {
+    'prop-1': {
+      _id: 'prop-1',
+      id: 'prop-1',
+      title: 'Premium Double Room (Near Delhi Univ)',
+      description: 'Beautiful and premium double sharing student room in North Campus, Delhi. Highly safe, fully furnished, close to university campus, transit stops, and local markets. Perfect for students and young professionals seeking a comfortable stay.',
+      propertyType: 'room',
+      listingType: 'rent',
+      location: {
+        country: 'India',
+        state: 'Delhi',
+        city: 'Delhi',
+        area: 'North Campus',
+        landmark: 'Near Vishwavidyalaya Metro Station',
+        pinCode: '110007',
+        latitude: 28.6976,
+        longitude: 77.2106
+      },
+      pricing: {
+        monthlyRent: 6500,
+        securityDeposit: 13000,
+        maintenanceCharges: 500,
+        brokerage: 0
+      },
+      roomDetails: {
+        bedrooms: 1,
+        bathrooms: 1,
+        balcony: 1,
+        floor: 2,
+        totalFloors: 4,
+        areaSqFt: 180,
+        furnishing: 'semi_furnished'
+      },
+      amenities: {
+        ac: true,
+        wifi: true,
+        powerBackup: true,
+        parking: true,
+        lift: false,
+        laundry: true,
+        kitchen: true,
+        gym: false,
+        swimmingPool: false,
+        security: true,
+        cctv: true,
+        housekeeping: true,
+        foodIncluded: false
+      },
+      features: {
+        verified: true,
+        featured: true,
+        premium: true
+      },
+      images: [
+        { url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=500&q=80', isPrimary: true },
+        { url: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=500&q=80' }
+      ],
+      ownerId: {
+        _id: '6a5686f546be09c83e4fff92',
+        name: 'Demo Owner',
+        email: 'owner@staymate.com',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+      },
+      statistics: {
+        views: 124,
+        favorites: 52
+      },
+      metadata: {
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    },
+    'prop-2': {
+      _id: 'prop-2',
+      id: 'prop-2',
+      title: 'Fully Furnished 2BHK flat',
+      description: 'Stunning fully furnished 2 BHK apartment available for rent in Sector 15, Noida. Equipped with high-end modular kitchen, modern fixtures, active security, parking spaces, and access to a local gym facility. Clean, spacious, and family-friendly.',
+      propertyType: 'flat',
+      listingType: 'rent',
+      location: {
+        country: 'India',
+        state: 'Uttar Pradesh',
+        city: 'Noida',
+        area: 'Sector 15',
+        landmark: 'Near Sector 15 Metro Station',
+        pinCode: '201301',
+        latitude: 28.5833,
+        longitude: 77.3167
+      },
+      pricing: {
+        monthlyRent: 12000,
+        securityDeposit: 24000,
+        maintenanceCharges: 1000,
+        brokerage: 0
+      },
+      roomDetails: {
+        bedrooms: 2,
+        bathrooms: 2,
+        balcony: 2,
+        floor: 4,
+        totalFloors: 8,
+        areaSqFt: 1050,
+        furnishing: 'fully_furnished'
+      },
+      amenities: {
+        ac: true,
+        wifi: true,
+        powerBackup: true,
+        parking: true,
+        lift: true,
+        laundry: true,
+        kitchen: true,
+        gym: true,
+        swimmingPool: false,
+        security: true,
+        cctv: true,
+        housekeeping: false,
+        foodIncluded: false
+      },
+      features: {
+        verified: true,
+        featured: true,
+        premium: true
+      },
+      images: [
+        { url: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=500&q=80', isPrimary: true },
+        { url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=500&q=80' }
+      ],
+      ownerId: {
+        _id: '6a5686f546be09c83e4fff92',
+        name: 'Demo Owner',
+        email: 'owner@staymate.com',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+      },
+      statistics: {
+        views: 242,
+        favorites: 96
+      },
+      metadata: {
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    },
+    'prop-3': {
+      _id: 'prop-3',
+      id: 'prop-3',
+      title: 'Cozy PG with Meals included',
+      description: 'Extremely comfortable paying guest accommodation for students and single professionals in Katraj, Pune. Package includes 3 fresh hygienic meals daily, Wi-Fi, laundry facilities, AC, housekeeping, and round-the-clock power backup. Homely vibe.',
+      propertyType: 'pg',
+      listingType: 'rent',
+      location: {
+        country: 'India',
+        state: 'Maharashtra',
+        city: 'Pune',
+        area: 'Katraj',
+        landmark: 'Near Bharati Vidyapeeth University',
+        pinCode: '411046',
+        latitude: 18.4529,
+        longitude: 73.8553
+      },
+      pricing: {
+        monthlyRent: 8000,
+        securityDeposit: 8000,
+        maintenanceCharges: 0,
+        brokerage: 0
+      },
+      roomDetails: {
+        bedrooms: 1,
+        bathrooms: 1,
+        balcony: 0,
+        floor: 1,
+        totalFloors: 3,
+        areaSqFt: 150,
+        furnishing: 'fully_furnished'
+      },
+      amenities: {
+        ac: true,
+        wifi: true,
+        powerBackup: true,
+        parking: false,
+        lift: false,
+        laundry: true,
+        kitchen: false,
+        gym: false,
+        swimmingPool: false,
+        security: true,
+        cctv: true,
+        housekeeping: true,
+        foodIncluded: true
+      },
+      features: {
+        verified: true,
+        featured: true,
+        premium: false
+      },
+      images: [
+        { url: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=500&q=80', isPrimary: true },
+        { url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=500&q=80' }
+      ],
+      ownerId: {
+        _id: '6a5686f546be09c83e4fff92',
+        name: 'Demo Owner',
+        email: 'owner@staymate.com',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+      },
+      statistics: {
+        views: 188,
+        favorites: 74
+      },
+      metadata: {
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    }
+  };
+  return mocks[id] || null;
+};
+
 export const propertyService = {
   /**
    * Create a new listing under owner
@@ -273,6 +492,10 @@ export const propertyService = {
    * Retrieves specific property details and increments statistic view count
    */
   getPropertyById: async (propertyId) => {
+    if (typeof propertyId === 'string' && propertyId.startsWith('prop-')) {
+      const mockProp = getMockProperty(propertyId);
+      if (mockProp) return mockProp;
+    }
     let property;
     if (isDbConnected()) {
       property = await Property.findById(propertyId).populate('ownerId', 'name email avatar phone');
@@ -310,6 +533,12 @@ export const propertyService = {
    * Add/Remove listing from user favorites wishlist
    */
   toggleWishlist: async (userId, propertyId) => {
+    if (typeof propertyId === 'string' && propertyId.startsWith('prop-')) {
+      return {
+        message: 'Listing added to wishlist (Demo Mode).',
+        isWishlisted: true
+      };
+    }
     let message = 'Listing added to wishlist.';
     let isWishlisted = false;
 
