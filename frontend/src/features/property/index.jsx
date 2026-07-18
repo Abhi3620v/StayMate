@@ -150,6 +150,21 @@ const Properties = () => {
     searchParams.get('search'), searchParams.get('lat'), searchParams.get('lng'), searchParams.get('radius')
   ]);
 
+  // Auto-scroll to search results when filters are applied
+  useEffect(() => {
+    if (hasSearchOrFilter) {
+      setTimeout(() => {
+        const element = document.getElementById('search-results-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [
+    city, propertyType, rentMin, rentMax, bedrooms, furnishing, verified, sort, 
+    searchParams.get('search'), searchParams.get('lat'), searchParams.get('lng'), searchParams.get('radius')
+  ]);
+
   useEffect(() => {
     if (showFiltersMobile) {
       document.body.style.overflow = 'hidden';
@@ -388,7 +403,7 @@ const Properties = () => {
         </div>
       ) : (
         /* Search results feed */
-        <div className="space-y-6">
+        <div id="search-results-section" className="space-y-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center border-b border-secondary-200/60 dark:border-secondary-900 pb-3 gap-3">
             <div>
               <span className="text-sm font-black text-secondary-900 dark:text-white">
