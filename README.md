@@ -427,7 +427,7 @@ B.Tech CSE | Full Stack Developer | MERN Stack | Problem Solver
 
 GitHub: https://github.com/Abhi3620v
 
-LinkedIn: *(Add your LinkedIn URL here)*
+LinkedIn: https://www.linkedin.com/in/abhishekyadav4653/
 
 ---
 
